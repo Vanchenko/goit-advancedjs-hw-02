@@ -1,6 +1,7 @@
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
+// комментарий
 const divgalEl = document.querySelector('.gallery');
 const newStructEl = galleryItems.map((elem) => `
 <li class="gallery__item">

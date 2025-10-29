@@ -1,28 +1,29 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import iziToast from "izitoast";
+import "izitoast/dist/css/iziToast.min.css";
 
 let dt = new Date().getTime();
-const currentTime = Date.now();
-console.log(currentTime);
+
 const options = {
-    enableTime: true,
-    time_24hr: true,
-    defaultDate: new Date(),
-    minuteIncrement: 1,
-    onClose(selectedDates) {
-        if (selectedDates[0] > options.defaultDate) {
-            btnDate.removeAttribute('disabled');
-            dt = selectedDates[0].getTime() - options.defaultDate.getTime();
-        } else {
-            iziToast.error({
-              title: 'Error',
-              message: 'Please choose a date in the future',
-              color: 'red',
-              messageColor: 'red',
-            });
-        }
-    },
+  enableTime: true,
+  time_24hr: true,
+  defaultDate: new Date(),
+  minuteIncrement: 1,
+  onClose(selectedDates) {
+    console.log(selectedDates[0]);
+    if (selectedDates[0] > options.defaultDate) {
+      btnDate.removeAttribute('disabled');
+      dt = selectedDates[0].getTime() - options.defaultDate.getTime();
+    } else {
+      iziToast.show({
+        message: 'Please choose a date in the future',
+        messageColor: 'blue',
+        backgroundColor: 'red',
+        position: 'topCenter',
+      });
+    }
+  },
 };
 
 const divTimerEl = document.querySelector('.timer');
@@ -30,7 +31,6 @@ const divFieldEl = document.querySelectorAll('.field');
 const spValuedEl = document.querySelectorAll('.value');
 const btnDate = document.querySelector('button[data-start]');
 const inputEl = document.querySelector("#datetime-picker");
-const spValDsEl = document.querySelector('span[data-days]')
 btnDate.setAttribute('disabled', 'true');
 let timerId = null;
 
@@ -38,17 +38,7 @@ let timerId = null;
 divTimerEl.style.display = "flex";
 divTimerEl.style.gap = "10px";
 divTimerEl.style.marginTop = "20px";
-console.log(divFieldEl);
 
-/*divFieldEl[0].style.display = "flex";
-divFieldEl[0].style.flexDirection = "column";
-divFieldEl[1].style.display = "flex";
-divFieldEl[1].style.flexDirection = "column";
-divFieldEl[2].style.display = "flex";
-divFieldEl[2].style.flexDirection = "column";
-divFieldEl[3].style.display = "flex";
-divFieldEl[3].style.flexDirection = "column";*/
-//divFieldEl.style.alignItems = "center";
 divFieldEl.forEach((item) => {
     item.style.display = "flex";
     item.style.flexDirection = "column";
@@ -57,9 +47,6 @@ divFieldEl.forEach((item) => {
 spValuedEl.forEach((item) => {
     item.style.fontSize = "52px";
 });
-
-//console.dir(spValDsEl);
-//console.dir(spValuedEl);
 
 const fp = flatpickr(inputEl, options );
 

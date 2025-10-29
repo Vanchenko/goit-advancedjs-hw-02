@@ -12,16 +12,16 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     console.log(selectedDates[0]);
-    if (selectedDates[0] > options.defaultDate) {
-      btnDate.removeAttribute('disabled');
-      dt = selectedDates[0].getTime() - options.defaultDate.getTime();
-    } else {
+    if (selectedDates[0] < new Date()) {
       iziToast.show({
         message: 'Please choose a date in the future',
         messageColor: 'blue',
         backgroundColor: 'red',
         position: 'topCenter',
       });
+    } else {
+      btnDate.removeAttribute('disabled');
+      dt = selectedDates[0].getTime() - new Date().getTime();
     }
   },
 };
@@ -48,7 +48,7 @@ spValuedEl.forEach((item) => {
     item.style.fontSize = "52px";
 });
 
-const fp = flatpickr(inputEl, options );
+const fp = flatpickr(inputEl, options);
 
 function convertMs(ms) {
     // Number of milliseconds per unit of time
@@ -83,8 +83,7 @@ btnDate.addEventListener('click', () => {
         spValuedEl[3].textContent = addLeadingZero(seconds);
         if (dt < 1000) {
             clearInterval(timerId);
-            btnDate.removeAttribute('disabled');
-            inputEl.setAttribute('disabled');
+            inputEl.removeAttribute('disabled');
         };
     }, 1000);
  });
